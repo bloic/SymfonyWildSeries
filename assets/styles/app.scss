@@ -1,0 +1,41 @@
+// assets/styles/app.scss
+
+// customize some Bootstrap variables
+$primary: darken(#428bca, 20%);
+
+// the ~ allows you to reference things in node_modules
+@import "~bootstrap/scss/bootstrap";
+
+$spacing: 8px;
+$premary-color: #5aa9e6;
+$link-color: #ffe45e;
+$text-size: 24px;
+$font-title: Montserrat Subrayada;
+$font-text: roboto;
+$secondary-color: #f9f9f9;
+
+body {
+  background-color: $secondary-color;
+}
+
+.navbar {
+  background-color: $premary-color;
+}
+
+.nav-item {
+  font-size: $text-size;
+
+  > a {
+    color: $secondary-color;
+  }
+
+  & :hover {
+    color: $link-color;
+  }
+}
+
+a {
+  font-size: $text-size;
+  color: $secondary-color;
+}
+
