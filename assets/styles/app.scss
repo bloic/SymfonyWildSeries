@@ -24,6 +24,7 @@ body {
 
 .nav-item {
   font-size: $text-size;
+  font-family: $font-title;
 
   > a {
     color: $secondary-color;
