@@ -2,35 +2,25 @@
 
 // customize some Bootstrap variables
 $primary: darken(#428bca, 20%);
+$spacing: 8px;
+$premary: #5aa9e6;
+$secondary: #ffe45e;
+$text-size: 24px;
+$font-title: Montserrat Subrayada;
+$font-text: roboto;
+$navbar-dark-color: #f9f9f9;
+$navbar-dark-hover-color: #ffe45e;
 
 // the ~ allows you to reference things in node_modules
 @import "~bootstrap/scss/bootstrap";
 
-$spacing: 8px;
-$premary-color: #5aa9e6;
-$link-color: #ffe45e;
-$text-size: 24px;
-$font-title: Montserrat Subrayada;
-$font-text: roboto;
-$secondary-color: #f9f9f9;
 
-body {
-  background-color: $secondary-color;
-}
-
-.navbar {
-  background-color: $premary-color;
-}
-
-.nav-item {
-    color: $secondary-color;
-  & :hover {
-    color: $link-color;
-  }
-}
-
-a {
+.nav-link {
   font-size: $text-size;
-  color: $secondary-color;
+  font-family: $font-title;
+  color: $navbar-dark-color;
+  &:hover {
+    color: $navbar-dark-hover-color;
+  }
 }
 
