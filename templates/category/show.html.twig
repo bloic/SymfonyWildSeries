@@ -1,0 +1,23 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ parent() }}{% endblock %}
+
+{% block body %}
+    <h1>Series de la catégorie: {{ categoryName }}</h1>
+    <div class="container-fluid">
+        <div class="row">
+            {% for program in programs %}
+                <div class="card w-25 mx-5 px-5">
+                    <div class="col-12">
+                        <p>N°:{{ program.id }}</p>
+                        <h2>{{ program.title }} </h2>
+                        <p>{{ program.summary }}</p>
+                        <a class="btn btn-secondary" href="{{ path("program_show", { id: program.id }) }}">Voir la fiche</a>
+                    </div>
+                </div>
+            {% else %}
+                Aucune série trouvée.
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}

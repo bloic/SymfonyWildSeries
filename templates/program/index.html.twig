@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}All programs{% endblock %}
+
+{% block body %}
+    <h1>Toutes les séries de la table program : </h1>
+    {% for program in programs %}
+        <div>
+            <h2>{{ loop.index }} / {{ program.title }} - Catégorie : {{ program.category.name }}</h2>
+            <p>{{ program.summary }}</p>
+            <a class="btn btn-secondary" href="{{ path("program_show", { id: program.id }) }}">Voir la fiche</a>
+
+        </div>
+    {% else %}
+        Aucune série trouvée.
+    {% endfor %}
+
+    <a class="btn btn-primary" href="{{ path('app_index') }}">
+        Retour à l'accueil
+    </a>
+{% endblock %}
