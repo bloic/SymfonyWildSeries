@@ -3,12 +3,30 @@
 
 {% block body %}
 
-    <div class="media">
-        <img class="align-self-start mr-3" src="{{programs.poster}}" alt="{{ programs.title }} poster">
+    <div class="media container-fluid">
         <div class="media-body">
-            <h1 class="mt-0">{{ programs.title }}</h1>
-            <p>{{ programs.summary }}</p>
-            <p>Catégorie : <a href="{{ path("category_index",{category: programs.category.name} )}}">{{ programs.category.name }}</a></p>
+            <div class="row">
+                <div class="col-12 col-md-4 justify-content-center">
+                    <img class="align-self-start mr-3" src="{{ programs.poster }}" alt="{{ programs.title }} poster">
+                </div>
+                <div class="col-12 col-md-6">
+                    <h1 class="mt-0">{{ programs.title }}</h1>
+                    <p>{{ programs.summary }}</p>
+                    <p>Catégorie :
+                        <a href="{{ path("category_index",{category: programs.category.name} ) }}">
+                            {{ programs.category.name }}
+                        </a>
+                    <p>Saison:</p>
+                    {% for season in seasons %}
+                        <p>
+                            <a href="{{ path("program_season_show", {programId: programs.id,seasonId: season.id} ) }}">
+                                N° {{ season.number }}</a>
+                        </p>
+                        <p>{{ season.description }}</p>
+                    {% endfor %}
+                    </p>
+                </div>
+            </div>
         </div>
     </div>
 

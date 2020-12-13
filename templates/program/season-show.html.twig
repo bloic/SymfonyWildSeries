@@ -1,0 +1,44 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Saison #{{ program.id }}{% endblock %}
+
+{% block body %}
+    <div class="container-fluid">
+    <div class="row">
+        </div>
+        <div class="col-12">
+            <h1 class="mt-0">{{ program.title }}</h1>
+            <p>{{ program.summary }}</p>
+            <p>Catégorie :
+                <a href="{{ path("category_index",{category: program.category.name} ) }}">
+                    {{ program.category.name }}
+                </a>
+        </div>
+    </div>
+    <p>Nombre d'épisodes :
+    <div class="accordion" id="accordionExample">
+    <div class="card">
+    {% for episode in episodes %}
+        <div class="card-header" id="headingOne">
+            <h2 class="mb-0">
+                <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse"
+                        data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+        <p>Episode n° {{ episode.number }}: {{ episode.title }}</p>
+        </p>
+        </button>
+        </h2>
+        </div>
+        <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
+            <div class="card-body">
+                <p>Synopsis: {{ episode.synopsis }}</p>
+            </div>
+        </div>
+    {% endfor %}
+    </div>
+    </div>
+
+    </p>
+    </p>
+    </div>
+{% endblock %}
+
