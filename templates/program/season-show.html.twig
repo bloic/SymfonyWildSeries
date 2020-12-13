@@ -23,15 +23,12 @@
             <h2 class="mb-0">
                 <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse"
                         data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-        <p>Episode n° {{ episode.number }}: {{ episode.title }}</p>
+        <p><a href="{{ path('program_episode_show',
+            {program: program.id,season: season.id, episode: episode.id}) }}">
+            Episode n° {{ episode.number }}: {{ episode.title }}</a></p>
         </p>
         </button>
         </h2>
-        </div>
-        <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
-            <div class="card-body">
-                <p>Synopsis: {{ episode.synopsis }}</p>
-            </div>
         </div>
     {% endfor %}
     </div>
