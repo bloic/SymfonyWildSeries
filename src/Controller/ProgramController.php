@@ -73,21 +73,15 @@ class ProgramController extends AbstractController
      * @Route("/{id}", requirements={"id"="\d+"}, methods={"GET"}, name="show")
      * @param ProgramRepository $programRepository
      * @param SeasonRepository $seasonRepository
-     * @param Program $id
+     * @param Program $program
      * @return Response
      */
-    public function show(ProgramRepository $programRepository,SeasonRepository $seasonRepository, Program $id): Response
+    public function show(ProgramRepository $programRepository,SeasonRepository $seasonRepository, Program $program): Response
     {
-        $programs = $programRepository->findOneBy(['id' => $id]);
-        if (!$programs) {
-            throw $this->createNotFoundException(
-                'No program with id : '.$id.' found in program\'s table.'
-            );
-        }
-        $seasons = $seasonRepository->findBy(['program'=>$id]);
+    //    $seasons = $seasonRepository->findBy(['program'=>$program]);
         return $this->render('program/show.html.twig', [
-            'programs' => $programs,
-            'seasons' => $seasons
+            'program' => $program,
+      //      'seasons' => $seasons
         ]);
     }
 
