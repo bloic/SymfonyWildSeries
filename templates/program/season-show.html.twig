@@ -24,7 +24,7 @@
                 <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse"
                         data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
         <p><a href="{{ path('program_episode_show',
-            {program: program.id,season: season.id, episode: episode.id}) }}">
+            {program: program.slug,season: season.id, episode: episode.slug}) }}">
             Episode n° {{ episode.number }}: {{ episode.title }}</a></p>
         </p>
         </button>

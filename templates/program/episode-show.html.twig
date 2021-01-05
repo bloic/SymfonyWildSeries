@@ -1,5 +1,5 @@
 {% extends 'base.html.twig' %}
-{% block title %}episode #{{ episode.id }}{% endblock %}
+{% block title %}episode #{{ episode.slug }}{% endblock %}
 
 {% block body %}
 <div class="card container-fluid pt-5">
@@ -11,7 +11,7 @@
             <h1>{{ program.title }}-Saison {{ season.number }}- {{ episode.title }}</h1>
             <p class="pt-4">{{ episode.synopsis }}</p>
             <a class="btn btn-primary " href="{{ path('program_season_show',
-                {program: program.id,season: season.id}) }}">
+                {program: program.slug,season: season.id}) }}">
                     Retour à la liste des episode
                 </a>
             </div>

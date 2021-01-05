@@ -8,7 +8,7 @@
         <div>
             <h2>{{ loop.index }} / {{ program.title }} - Catégorie : {{ program.category.name }}</h2>
             <p>{{ program.summary }}</p>
-            <a class="btn btn-secondary" href="{{ path("program_show", { id: program.id }) }}">Voir la fiche</a>
+            <a class="btn btn-secondary" href="{{ path('program_show', { slug: program.slug }) }}">Voir la fiche</a>
 
         </div>
     {% else %}
