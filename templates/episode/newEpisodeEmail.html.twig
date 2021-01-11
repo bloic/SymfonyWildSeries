@@ -1,0 +1,13 @@
+{% extends 'layoutmailer.html.twig' %}
+{% block body %}
+    <h1>New episode {{ episode.title }} created</h1>
+    <div class="container-fluid">
+        <h2>Hello, the new epsiode {{ episode.title }} of {{episode.season.program.title }} has been created on Wild Series</h2>
+        <div class="col-md-6">
+            <p>{{ episode.title }} - Episode {{ episode.number }} - season {{ episode.season.number }}</p>
+            <p>Synopsis : {{ episode.synopsis }}</p>
+        </div>
+    </div>
+    <a class="btn btn-secondary" href="{{ url("program_season_show", { program: episode.season.program.slug ,
+        season: episode.season.id }) }}">Look to the episodes</a>
+{% endblock %}

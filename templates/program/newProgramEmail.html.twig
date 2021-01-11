@@ -1,0 +1,26 @@
+{% extends 'layoutmailer.html.twig' %}
+
+{% block title %} {{ program.title }} {% endblock %}
+
+{% block header %}
+{% endblock %}
+{% block body %}
+    <h1>New program {{ program.title }} created</h1>
+    <div class="container-fluid">
+        <p>Hello, the new program {{ program.title }} has been created on Wild Series</p>
+        <img class=" col-md-6" src="{{ program.poster }}" alt="{{ program.title }} poster">
+        <div class="col-md-6">
+            <p>Summary : {{ program.summary }}</p>
+            <strong>Acteurs :</strong>
+            <ul>
+                {% for actor in program.actors %}
+                    <li>
+                        <a href="{{ path('actors_show', {actor: actor.id}) }}">{{ actor.name }}</a>
+                    </li>
+                {% else %}
+                    <li>Aucun acteur pour cette série</li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+{% endblock %}
