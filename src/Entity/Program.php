@@ -50,14 +50,13 @@ class Program
     private $category;
 
     /**
-     * @ORM\Column(type="string", length=255)
-     * @Assert\NotBlank()
+     * @ORM\Column(type="string", length=255, nullable=true)
      * @Assert\Length(max="255")
      */
     private $country;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer", nullable=true)
      */
     private $year;
 
