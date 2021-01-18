@@ -1,0 +1,5 @@
+{% form_theme form 'bootstrap_4_layout.html.twig' %}
+{{ form_start(form) }}
+{{ form_widget(form) }}
+<button class="btn btn-secondary">{{ button_label|default('Ajouter') }}</button>
+{{ form_end(form) }}

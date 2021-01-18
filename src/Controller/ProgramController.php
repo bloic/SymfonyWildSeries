@@ -3,14 +3,21 @@
 
 namespace App\Controller;
 
+use App\Entity\Comment;
 use App\Entity\Episode;
 use App\Entity\Program;
 use App\Entity\Season;
+use App\Form\CommentType;
 use App\Form\ProgramType;
+use App\Repository\CommentRepository;
 use App\Repository\EpisodeRepository;
 use App\Repository\ProgramRepository;
 use App\Repository\SeasonRepository;
 use App\Service\Slugify;
+use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\OptimisticLockException;
+use Doctrine\ORM\ORMException;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -24,7 +31,6 @@ use Symfony\Component\HttpFoundation\Request;
 /**
  * @Route("/programs", name="program_")
  */
-
 class ProgramController extends AbstractController
 {
 
@@ -38,7 +44,7 @@ class ProgramController extends AbstractController
      * @return Response
      * @throws TransportExceptionInterface
      */
-    public function new(Request $request, slugify $slugify, MailerInterface $mailer ): Response
+    public function new(Request $request, slugify $slugify, MailerInterface $mailer): Response
     {
         // Create a new Category Object
         $program = new Program();
@@ -79,7 +85,7 @@ class ProgramController extends AbstractController
         $programs = $programRepository->findAll();
         return $this->render(
             'program/index.html.twig', ['programs' => $programs
-            ]);
+        ]);
     }
 
     /**
@@ -87,7 +93,7 @@ class ProgramController extends AbstractController
      * @param Program $program
      * @return Response
      */
-    public function show( Program $program): Response
+    public function show(Program $program): Response
     {
         return $this->render('program/show.html.twig', [
             'program' => $program,
@@ -102,10 +108,10 @@ class ProgramController extends AbstractController
      * @param Season $season
      * @return Response
      */
-    public function showSeason( EpisodeRepository $episodeRepository,
-         Program $program, Season $season): Response
+    public function showSeason(EpisodeRepository $episodeRepository,
+                               Program $program, Season $season): Response
     {
-        $episodes = $episodeRepository->findBy(['season'=>$season]);
+        $episodes = $episodeRepository->findBy(['season' => $season]);
         return $this->render('program/season-show.html.twig', [
             'program' => $program,
             'season' => $season,
@@ -114,25 +120,43 @@ class ProgramController extends AbstractController
     }
 
     /**
-     * @Route("/{program}/season/{season}/episode/{episode}", methods={"GET"}, name="episode_show")
+     * @Route("/{program}/season/{season}/episode/{episode}", name="episode_show")
      * @ParamConverter("program", class="App\Entity\Program", options={"mapping": {"program": "slug"}})
      * @ParamConverter("episode", class="App\Entity\Episode", options={"mapping": {"episode": "slug"}})
      * @param Program $program
      * @param Season $season
      * @param Episode $episode
+     * @param CommentRepository $commentRepository
+     * @param Request $request
+     * @param EntityManagerInterface $entityManager
      * @return Response
      */
     public function showEpisode(
-                                Program $program,
-                                Season $season,
-                                Episode $episode): Response
+        Program $program,
+        Season $season,
+        Episode $episode,
+        CommentRepository $commentRepository,
+        Request $request,
+        EntityManagerInterface $entityManager
+    ): Response
     {
+        $comment = new Comment();
+        $form = $this->createForm(CommentType::class, $comment);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $comment->setUser($this->getUser());
+            $comment->setEpisode($episode);
+            $entityManager->persist($comment);
+            $entityManager->flush();
+        }
+
         return $this->render('program/episode-show.html.twig', [
             'program' => $program,
             'season' => $season,
-            'episode' => $episode
+            'episode' => $episode,
+            'form' => $form->createView(),
+            'comments' => $commentRepository->findBy([],['comment'=>'DESC'])
         ]);
     }
-
 
 }

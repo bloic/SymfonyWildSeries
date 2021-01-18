@@ -37,3 +37,7 @@ https://drive.google.com/file/d/12Hlw9vjXfDJK3cmVhwlr15mlNuXP4sRn/view?usp=shari
 Quête 18
 
 https://drive.google.com/file/d/1WcbYZeEIBzYvq9bwXA48RXftSu-HfLpy/view?usp=sharing
+
+Quête 19
+
+https://drive.google.com/file/d/11DULcLt620RexXt0TpOClpu881zkqvCL/view?usp=sharing

@@ -2,16 +2,50 @@
 {% block title %}episode #{{ episode.slug }}{% endblock %}
 
 {% block body %}
-<div class="card container-fluid pt-5">
-    <div class="row">
-        <div class="col-12 col-md-4">
-            <img src="{{ program.poster }}" alt="">
-        </div>
-        <div class="col-12 col-md-6">
-            <h1>{{ program.title }}-Saison {{ season.number }}- {{ episode.title }}</h1>
-            <p class="pt-4">{{ episode.synopsis }}</p>
-            <a class="btn btn-primary " href="{{ path('program_season_show',
-                {program: program.slug,season: season.id}) }}">
+    <div class="card container-fluid pt-5">
+        <div class="row">
+            <div class="col-12 col-md-4">
+                <img src="{{ program.poster }}" alt="">
+            </div>
+            <div class="col-12 col-md-6">
+                <h1>{{ program.title }}-Saison {{ season.number }}- {{ episode.title }}</h1>
+                <p class="pt-4">{{ episode.synopsis }}</p>
+                {% for comment in comments %}
+                    <div class="card">
+                        <p>{{ comment.user.email }}</p>
+                        <p>{{ comment.comment }}</p>
+                        <p>{{ comment.rate }}</p>
+                    </div>
+                {% endfor %}
+                {% if app.user %}
+                    <div class="accordion" id="accordionExample">
+                        <div class="card">
+                            <div class="card-header" id="headingOne">
+                                <h2 class="mb-0">
+                                    <button class="btn btn-link btn-block text-left" type="button"
+                                            data-toggle="collapse"
+                                            data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                        <h3>Ajouter un commentaire</h3>
+                                    </button>
+                                </h2>
+                            </div>
+                            <div id="collapseOne" class="collapse show"
+                                 aria-labelledby="headingOne" data-parent="#accordionExample">
+                                <div class="card-body">
+                                    {% form_theme form 'bootstrap_4_layout.html.twig' %}
+                                    {{ form_start(form) }}
+                                    {{ form_widget(form) }}
+                                    <button class="btn btn-secondary">{{ button_label|default('Ajouter') }}</button>
+                                    {{ form_end(form) }}
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                {% endif %}
+
+                <a class="btn btn-primary " href="{{ path('program_season_show',
+                    {program: program.slug,season: season.id}) }}">
                     Retour à la liste des episode
                 </a>
             </div>
