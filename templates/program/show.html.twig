@@ -40,8 +40,13 @@
             </div>
         </div>
     </div>
-
+    <div class="row">
     <a class="btn btn-primary m-4" href="{{ path('program_index') }}">
         Retour à la liste des programmes
     </a>
+
+        {% if is_granted("ROLE_CONTRIBUTOR")  %}
+            <a class="mx-5 pb-0 btn btn-primary" href="{{ path('program_edit', { 'slug': program.slug} ) }}">Éditer</a>
+        {%endif%}
+    </div>
 {% endblock %}
