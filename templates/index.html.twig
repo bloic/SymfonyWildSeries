@@ -2,5 +2,19 @@
 
 {% block body %}
     <h1>Bienvenue sur Wild Series</h1>
+    <div class="container-fluid">
+        <h2 class="text-center my-5">Les trois dernières series ajoutées</h2>
 
+        <div class="row d-flex justify-content-around">
+    {% for program in programs %}
+        <div class="card col-lg-3 text-center" >
+            <img src="{{ program.poster }}" class="card-img-top poster" alt="{{ program.title }}">
+            <div class="card-body">
+                <h3>{{ program.title }}</h3>
+                <a href="#" class="btn btn-primary">Go somewhere</a>
+            </div>
+        </div>
+    {% endfor %}
+    </div>
+    </div>
 {% endblock %}

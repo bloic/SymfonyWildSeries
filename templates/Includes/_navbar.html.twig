@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
     <a class="navbar-brand" href="#">
-        <img class="mr-2" src="https://via.placeholder.com/75" alt="logo" class="rounded-0">WildSeries
+        <img class="mr-2  rounded-circle" src="https://via.placeholder.com/75" alt="logo">WildSeries
     </a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
             aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -24,7 +24,7 @@
                 <a class="nav-link" href="#">
                     {% if (app.user) %}
             <li class="nav-item ml-2">
-                <a class="nav-link disabled " href="#">{{ app.user.email }}</a>
+                <a class="nav-link  " href="{{ path('my-profile_index') }}">Voir mon profil</a>
             </li>
             <a href="{{ path('app_logout') }}" class="btn btn-secondary">logout</a>
             {% else %}

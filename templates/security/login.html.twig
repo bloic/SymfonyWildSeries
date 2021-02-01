@@ -14,7 +14,9 @@
             </div>
         {% endif %}
         <div class="d-flex flex-column">
-            <h1 class="h3 mb-3 font-weight-normal mt-5 text-center">Please sign in</h1>
+            <h1 class="h3 mb-3 font-weight-normal mt-5 text-center">Please sign in or
+                <a class="text-decoration-none" href="{{ path('app_register') }}">register</a>
+            </h1>
             <label for="inputEmail">Email</label>
             <input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" required
                    autofocus>

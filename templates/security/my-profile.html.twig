@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Welcome! {{ app.user.username }}{% endblock %}
+
+{% block body %}
+
+        {% for user in users %}
+            {% if app.user.email == user.email %}
+
+            <div class="container py-5">
+                <p>
+                    {{ user.username }}
+                </p>
+                <p>
+                    {{ user.email }}
+                </p>
+                <p>
+                    {{ user.bio }}
+                </p>
+                <a class="btn btn-outline-primary" href="{{ path('app_index') }}">home</a>
+            </div>
+
+    {% endif %}
+        {% endfor %}
+
+{% endblock %}
+
