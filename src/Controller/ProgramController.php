@@ -9,6 +9,7 @@ use App\Entity\Program;
 use App\Entity\Season;
 use App\Form\CommentType;
 use App\Form\ProgramType;
+use App\Form\SearchProgramFormType;
 use App\Repository\CommentRepository;
 use App\Repository\EpisodeRepository;
 use App\Repository\ProgramRepository;
@@ -83,11 +84,21 @@ class ProgramController extends AbstractController
      * @param ProgramRepository $programRepository
      * @return Response
      */
-    public function index(ProgramRepository $programRepository): Response
+    public function index(Request $request, ProgramRepository $programRepository): Response
     {
-        $programs = $programRepository->findAll();
-        return $this->render(
-            'program/index.html.twig', ['programs' => $programs
+        $form = $this->createForm(SearchProgramFormType::class);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $search = $form->getData()['search'];
+            $programs = $programRepository->findLikeName($search);
+        } else {
+            $programs = $programRepository->findAll();
+        }
+
+        return $this->render('program/index.html.twig', [
+            'programs' => $programs,
+            'form' => $form->createView(),
         ]);
     }
 
@@ -142,6 +153,7 @@ class ProgramController extends AbstractController
         Request $request,
         EntityManagerInterface $entityManager
     ): Response
+
     {
         $comment = new Comment();
         $form = $this->createForm(CommentType::class, $comment);

@@ -3,6 +3,14 @@
 {% block title %}All programs{% endblock %}
 
 {% block body %}
+    {% form_theme form 'bootstrap_4_layout.html.twig' %}
+    <div class="container">
+    {{ form_start(form) }}
+    {{ form_widget(form) }}
+    <button class="btn btn-secondary">{{ button_label|default('Search') }}</button>
+    {{ form_end(form) }}
+    </div>
+    <div class="container-fluid">
     <h1>Toutes les séries de la table program : </h1>
     {% for program in programs %}
         <div>
@@ -15,7 +23,8 @@
         Aucune série trouvée.
     {% endfor %}
 
-    <a class="btn btn-primary" href="{{ path('app_index') }}">
+    <a class="btn btn-primary my-3" href="{{ path('app_index') }}">
         Retour à l'accueil
     </a>
+    </div>
 {% endblock %}
