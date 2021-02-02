@@ -4,6 +4,7 @@
 
 {% block body %}
     {% form_theme form 'bootstrap_4_layout.html.twig' %}
+    {{ app.session.get('total') }}
     <div class="container">
     {{ form_start(form) }}
     {{ form_widget(form) }}
@@ -17,6 +18,7 @@
             <h2>{{ loop.index }} / {{ program.title }} - Catégorie : {{ program.category.name }}</h2>
             <p>{{ program.summary }}</p>
             <a class="btn btn-secondary" href="{{ path('program_show', { slug: program.slug }) }}">Voir la fiche</a>
+            {% include 'program/_delete.html.twig' %}
 
         </div>
     {% else %}

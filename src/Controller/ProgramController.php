@@ -28,7 +28,7 @@ use Symfony\Component\Mime\Email;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
-
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 
 /**
@@ -63,6 +63,7 @@ class ProgramController extends AbstractController
             $entityManager->persist($program);
             $entityManager->flush();
 
+
             $email = (new Email())
                 ->from($this->getParameter('mailer_from'))
                 ->to('your_email@example.com')
@@ -70,6 +71,9 @@ class ProgramController extends AbstractController
                 ->html($this->renderView('Program/newProgramEmail.html.twig', ['program' => $program]));
 
             $mailer->send($email);
+
+            $this->addFlash('success', 'The new program has been created');
+
 
             return $this->redirectToRoute('program_index');
         }
@@ -84,8 +88,14 @@ class ProgramController extends AbstractController
      * @param ProgramRepository $programRepository
      * @return Response
      */
-    public function index(Request $request, ProgramRepository $programRepository): Response
+    public function index(Request $request, ProgramRepository $programRepository, SessionInterface $session): Response
     {
+        if (!$session->has('total')) {
+            $session->set('total', 0); // if total doesn’t exist in session, it is initialized.
+        }
+
+        $total = $session->get('total');
+
         $form = $this->createForm(SearchProgramFormType::class);
         $form->handleRequest($request);
 
@@ -192,6 +202,9 @@ class ProgramController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
 
+            $this->addFlash('success', 'The program has been modified');
+
+
             return $this->redirectToRoute('program_index');
         }
 
@@ -202,7 +215,7 @@ class ProgramController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="delete", methods={"DELETE"})
+     * @Route("/{program}/seasons/{season}/episode/{episode}/{id}", name="comment_delete", methods={"DELETE"})
      * @param Request $request
      * @param Comment $comment
      * @return Response
@@ -214,6 +227,25 @@ class ProgramController extends AbstractController
             $entityManager->remove($comment);
             $entityManager->flush();
         }
+
+        return $this->redirectToRoute('program_index');
+    }
+
+    /**
+     * @Route("/{id}", name="delete", methods={"DELETE"})
+     * @param Request $request
+     * @param Program $program
+     * @return Response
+     */
+    public function deleteProgram(Request $request, Program $program): Response
+    {
+        if ($this->isCsrfTokenValid('delete'.$program->getId(), $request->request->get('_token'))) {
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->remove($program);
+            $entityManager->flush();
+        }
+
+        $this->addFlash('danger', 'the program has been deleted');
 
         return $this->redirectToRoute('program_index');
     }
